@@ -31,7 +31,7 @@ export default function Card(props) {
 
     api
       .put(
-        "/cards/generate",
+        "/api/cards/generate",
         { memberId: props.card.member_id },
         { headers: { Authorization: "Bearer " + token } }
       )
