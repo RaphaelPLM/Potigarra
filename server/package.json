@@ -23,12 +23,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RaphaelPLM/Potigarra-API.git"
+    "url": "git+https://github.com/RaphaelPLM/Potigarra.git"
   },
   "author": "Raphael Müller",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RaphaelPLM/Potigarra-API/issues"
+    "url": "https://github.com/RaphaelPLM/Potigarra/issues"
   },
-  "homepage": "https://github.com/RaphaelPLM/Potigarra-API#readme"
+  "homepage": "https://github.com/RaphaelPLM/Potigarra#readme"
 }
