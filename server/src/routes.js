@@ -13,7 +13,7 @@ const routes = express.Router();
 
 // Member routes
 routes.get('/api/members', AuthMiddleware.verifyToken, MembersController.index);
-routes.post('api//register', MemberValidator.validateCreate, MembersController.create);
+routes.post('api/register', MemberValidator.validateCreate, MembersController.create);
 
 // Auth routes
 routes.post('/api/login', AuthController.login);

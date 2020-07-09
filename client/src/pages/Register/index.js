@@ -51,7 +51,7 @@ export default function Register() {
     };
 
     try {
-      const response = await api.post("/api/register", data);
+      const response = await api.post("/register", data);
 
       history.push("/");
     } catch (error) {
