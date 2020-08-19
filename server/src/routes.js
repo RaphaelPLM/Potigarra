@@ -10,20 +10,19 @@ const MemberValidator = require('./validators/member_validator');
 
 const routes = express.Router();
 
-
 // Member routes
-routes.get('/members', AuthMiddleware.verifyToken, MembersController.index);
-routes.post('/register', MemberValidator.validateCreate, MembersController.create);
+routes.get('/api/members', AuthMiddleware.verifyToken, MembersController.index);
+routes.post('/api/register', MemberValidator.validateCreate, MembersController.create);
 
 // Auth routes
-routes.post('/login', AuthController.login);
-routes.get('/verifyToken', AuthMiddleware.verifyToken, (request, response) => {
+routes.post('/api/login', AuthController.login);
+routes.get('/api/verifyToken', AuthMiddleware.verifyToken, (request, response) => {
 	return response.status(200).json({ message: 'The token is valid.' });
 });
 
 //Card routes
-routes.get('/cards', AuthMiddleware.verifyToken, CardsController.index);
+routes.get('/api/cards', AuthMiddleware.verifyToken, CardsController.index);
 
-routes.put('/cards/generate', AuthMiddleware.verifyToken, CardsController.generatePass)
+routes.put('/api/cards/generate', AuthMiddleware.verifyToken, CardsController.generatePass)
 
 module.exports = routes;
