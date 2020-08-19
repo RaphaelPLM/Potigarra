@@ -1,7 +1,6 @@
 import React, { useEffect, useState, Fragment } from "react";
 import "./styles.css";
 import ViewListIcon from "@material-ui/icons/ViewList";
-import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import AppsIcon from "@material-ui/icons/Apps";
 import { IconButton } from "@material-ui/core";
 import Card from "../../components/Card/Card";
@@ -10,12 +9,15 @@ import CardManagerMenu from "../../components/CardManagerMenu/CardManagerMenu";
 import api from "../../services/api";
 
 import Sidenav from "./Sidenav";
+import MemberTable from "./MemberTable";
+import IconBar from "./IconBar";
 
 export default function Dashboard() {
   const [cards, setCards] = useState([]);
   const [lastFilter, setLastFilter] = useState("*");
   const [filteredCards, setFilteredCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [displayCards, setDisplayCards] = useState(true);
 
   useEffect(() => {
     let token = localStorage.getItem("@potigarra/token");
@@ -102,22 +104,17 @@ export default function Dashboard() {
 
             <div className="horizontal-separator"></div>
 
-            <div className="icon-bar">
-              <IconButton className="icon" size="small" aria-label="list">
-                <AppsIcon />
-              </IconButton>
-              <IconButton className="icon" size="small" aria-label="list">
-                <ViewListIcon />
-              </IconButton>
-            </div>
+            <IconBar onClick={(bool) => setDisplayCards(bool)}></IconBar>
             {isLoading === true ? (
               <h1>Loading</h1>
-            ) : (
+            ) : displayCards === true ? (
               <CardGrid>
                 {filteredCards.map((card) => (
                   <Card updateCallback={updateCards} card={card}></Card>
                 ))}
               </CardGrid>
+            ) : (
+              <MemberTable members={filteredCards}></MemberTable>
             )}
           </div>
         </main>
