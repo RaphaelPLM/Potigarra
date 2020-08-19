@@ -17,8 +17,8 @@ import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import Paper from "@material-ui/core/Paper";
-
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import styled from "styled-components";
 
 import Button from "../../../components/Button";
 
@@ -57,6 +57,12 @@ const theme = createMuiTheme({
     },
   },
 });
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 export default function MemberTable(props) {
   console.log(props.members);
@@ -116,12 +122,15 @@ export default function MemberTable(props) {
             field: "created_at",
           },
           {
-            render: (data) =>
-              data.status !== "Active" ? (
-                <Button color="success" title="Ativar" />
-              ) : (
-                <Button color="error" title="Desativar" />
-              ),
+            render: (data) => (
+              <ButtonContainer>
+                {data.status !== "Active" ? (
+                  <Button color="success" title="Ativar" />
+                ) : (
+                  <Button color="error" title="Desativar" />
+                )}
+              </ButtonContainer>
+            ),
           },
         ]}
         data={props.members}
