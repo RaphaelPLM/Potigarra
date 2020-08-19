@@ -61,7 +61,7 @@ module.exports = {
         console.log(err)
         
         return response
-          .status(422)
+          .status(500)
           .json({ error: "An error occurred while registering. Try again." });
       }
     }
