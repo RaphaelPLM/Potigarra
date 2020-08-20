@@ -9,7 +9,7 @@ module.exports = {
 			password: process.env.DEVELOPMENT_DATABASE_PASSWORD
 		},
 		migrations: {
-			directory: './src/database/migrations'
+			directory: './server/src/database/migrations'
 		},
 		useNullAsDefault: true
 	},
@@ -17,7 +17,7 @@ module.exports = {
 		client: 'postgresql',
 		connection: process.env.DATABASE_URL,
 		migrations: {
-			directory: './src/database/migrations'
+			directory: './server/src/database/migrations'
 		}
 	}
 };
