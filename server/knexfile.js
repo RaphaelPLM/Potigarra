@@ -1,7 +1,5 @@
 require('dotenv').config({ path: '.env' });
 
-console.log('TESTEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n\n\n\n\nTESTEEEEEEEE', process.env.DEVELOPMENT_DATABASE_NAME)
-
 module.exports = {
 	development: {
 		client: 'postgresql',
