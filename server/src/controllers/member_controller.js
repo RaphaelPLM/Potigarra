@@ -1,24 +1,16 @@
 const connection = require("../database/connection");
 const bcrypt = require("bcrypt");
 const CardsController = require("./card_controller");
+const MemberModel = require("../models/member.js");
+const CardModel = require("../models/card");
 
 module.exports = {
   async index(request, response) {
-    const members = await connection("members").select(
-      "id",
-      "username",
-      "email",
-      "cpf",
-      "rg",
-      "class_number",
-      "gender",
-      "phone_number",
-      "birthdate"
-    );
+    const { members, count } = await MemberModel.findAll();
 
-    const [count] = await connection("members").count();
+    count;
 
-    response.header("X-Total-Count", count["count(*)"]);
+    response.header("X-Total-Count", count);
 
     return response.json(members);
   },
@@ -36,30 +28,27 @@ module.exports = {
     } = request.body;
 
     const passwordHash = bcrypt.hashSync(password, 10);
-    try {
-      const [id] = await connection("members")
-        .insert({
-          username: username,
-          email: email,
-          password: passwordHash,
-          cpf: cpf,
-          rg: rg,
-          class_number: classNumber,
-          gender: gender,
-          phone_number: phoneNumber,
-          birthdate: birthdate,
-        })
-        .returning("id");
 
-      await CardsController.create(id);
+    try {
+      const id = await MemberModel.create({
+        username,
+        email,
+        passwordHash,
+        cpf,
+        rg,
+        classNumber,
+        gender,
+        phoneNumber,
+        birthdate,
+      });
+
+      await CardModel.create(id);
     } catch (err) {
       if (err.constraint === "members_email_unique") {
         return response
           .status(422)
           .json({ error: "This email is already in use." });
       } else {
-        console.log(err)
-        
         return response
           .status(500)
           .json({ error: "An error occurred while registering. Try again." });
