@@ -10,8 +10,6 @@ module.exports = {
 
 			jwt.verify(bearerToken, process.env.TOKEN_SECRET_KEY, function(err, decoded) {
 				if (err) {
-					console.log('\n [ERROR]', err.message);
-
 					return response.status(401).json({ error: 'Unauthorized access.' });
 				}
 

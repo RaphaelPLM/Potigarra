@@ -22,7 +22,6 @@ routes.get('/api/verifyToken', AuthMiddleware.verifyToken, (request, response) =
 
 //Card routes
 routes.get('/api/cards', AuthMiddleware.verifyToken, CardsController.index);
-
 routes.put('/api/cards/generate', AuthMiddleware.verifyToken, CardsController.generatePass)
 
 module.exports = routes;

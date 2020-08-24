@@ -65,8 +65,6 @@ const ButtonContainer = styled.div`
 `;
 
 export default function MemberTable(props) {
-  console.log(props.members);
-
   return (
     <ThemeProvider theme={theme}>
       <MaterialTable
