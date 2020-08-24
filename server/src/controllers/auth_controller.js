@@ -1,22 +1,8 @@
 require("dotenv").config({ path: ".env" });
 
-const connection = require("../database/connection");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
-async function getUserFromEmail(email) {
-  const data = await connection("members")
-    .select("id", "password")
-    .where("email", email)
-    .first();
-
-  // In case the user is invalid, data will be undefined.
-  if (data == undefined) {
-    return undefined;
-  }
-
-  return { id: data.id, password: data.password };
-}
+const MemberModel = require("../models/member")
 
 module.exports = {
   async login(request, response) {
@@ -25,21 +11,18 @@ module.exports = {
 
     const { email, password } = request.body;
 
-    const user = await getUserFromEmail(email);
+    const user = await MemberModel.findByEmail(email)
 
-    if (user == undefined) {
+    if (user === undefined) {
       return response.status(401).json({ error: errorMessage });
     }
 
-    const userId = user.id;
-    const passwordHash = user.password;
-
-    if (!bcrypt.compareSync(password, passwordHash)) {
+    if (!bcrypt.compareSync(password, user.password)) {
       return response.status(401).json({ error: errorMessage });
     }
 
     jwt.sign(
-      { user: { id: userId, email } },
+      { user: { id: user.id, email } },
       process.env.TOKEN_SECRET_KEY,
       { expiresIn: parseInt(process.env.TOKEN_EXPIRATION_TIME) },
       (error, token) => {
