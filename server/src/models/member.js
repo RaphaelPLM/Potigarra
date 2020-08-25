@@ -26,6 +26,14 @@ module.exports = {
 
     return member;
   },
+  async findByEmail(email) {
+    const member = await connection("members")
+    .select("id", "password")
+    .where("email", email)
+    .first();
+
+    return member;
+  },
   async create({
     username,
     email,
